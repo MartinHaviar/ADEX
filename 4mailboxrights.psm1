@@ -18,6 +18,7 @@ choose one of the basic rights. Will be showed after run function.
     KEYWORDS: mailbox rights
 #>
 
+[CmdletBinding()]
 param ($identity = $(read-host 'please input mailbox name'))
        
 
@@ -34,7 +35,7 @@ ForEach($f in $exclus) {
  $fname = $identity+ ":" + $f.FolderPath.Replace("/","\");
  if ($fname -like "*ukladanie*")
     {$fname = $fname.split("\")[0];$fname=$fname+ "\"} else {if ($fname -match "Top of Information Store") 
-    {$fname = $fname.Replace(ì\Top of Information Storeî,î\î)}}
+    {$fname = $fname.Replace(‚Äú\Top of Information Store‚Äù,‚Äù\‚Äù)}}
  $sel=get-MailboxFolderPermission $fname | select @{n="folderpath";e={$fname}},identity,accessrights;$arr+=$sel}
  $arr | ft -autosize 
  Write-Host "Opravnenia mimo default a anonymous" -ForegroundColor Cyan
@@ -119,7 +120,7 @@ ForEach($f in $exclus) {
  $fname = $identity+ ":" + $f.FolderPath.Replace("/","\");
  if ($fname -like "*ukladanie*")
     {$fname = $fname.split("\")[0];$fname=$fname+ "\"} else {if ($fname -match "Top of Information Store") 
-    {$fname = $fname.Replace(ì\Top of Information Storeî,î\î)}}
+    {$fname = $fname.Replace(‚Äú\Top of Information Store‚Äù,‚Äù\‚Äù)}}
  $sel=get-MailboxFolderPermission $fname | select @{n="folderpath";e={$fname}},identity,accessrights;$arr+=$sel}
  $arr | ft -autosize 
  Write-Host "Opravnenia mimo default a anonymous" -ForegroundColor Cyan
@@ -184,7 +185,7 @@ ForEach($f in $exclus) {
  $fname = $identity+ ":" + $f.FolderPath.Replace("/","\");
  if ($fname -like "*ukladanie*")
     {$fname = $fname.split("\")[0];$fname=$fname+ "\"} else {if ($fname -match "Top of Information Store") 
-    {$fname = $fname.Replace(ì\Top of Information Storeî,î\î)}}
+    {$fname = $fname.Replace(‚Äú\Top of Information Store‚Äù,‚Äù\‚Äù)}}
  $sel=get-MailboxFolderPermission $fname | select @{n="folderpath";e={$fname}},identity,accessrights;$arr+=$sel}
  $arr | ft -autosize 
  Write-Host ""
