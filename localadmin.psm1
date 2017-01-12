@@ -4,7 +4,8 @@ Function Get-LocalGroup {
 .SYNOPSIS
 Retrieves membership of local administrators group.
 .DESCRIPTION
-Scan every accessible computer inside domain and then enumerate membership of local administrator group using [ADSI] provider
+Scan every accessible computer inside domain and then enumerate membership of local administrator group using [ADSI] provider.
+Generate seven excel tables with legal and illegal users.
 .PARAMeter user
 user account which have problems with authentification
 .Notes 
@@ -14,7 +15,7 @@ user account which have problems with authentification
     KEYWORDS: [ADSI], membership,local admin group
 #>
 
-
+[cmdletbinding()]
 param([string]$outputdir = "D:\usersdata\haviarm\Desktop\testL\localadm",
       [string]$OU = $(read-host 'please input DN of search OU in AD, for example: OU=TN,OU=RS,DC=mil,DC=sk'))
 
@@ -33,7 +34,8 @@ begin {
     $f=0
     $g=0
     
-    $sw=$(((get-date).adddays(-42) - [datetime]::parse('1601-01-01')).ticks)    $comps=Get-ADComputer -Searchbase "$ou" -Properties name,lastlogontimestamp -Filter  {lastLogonTimestamp -ge $sw} | select name
+    $sw=$(((get-date).adddays(-42) - [datetime]::parse('1601-01-01')).ticks)
+    $comps=Get-ADComputer -Searchbase "$ou" -Properties name,lastlogontimestamp -Filter  {lastLogonTimestamp -ge $sw} | select name
     $count=$comps.count
    	$LocalGroupName = "Administrators"
     $OUT=$OutputDir+"\"+$OU.substring(3,1)+$time1
