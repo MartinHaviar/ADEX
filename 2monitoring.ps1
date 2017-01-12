@@ -7,7 +7,7 @@ Complete monitoring of critical infrastructure servicies.
 .DESCRIPTION
 Monitoring of replication between domain controllers across europe, group policy engine check, 
 replication of mailbox databeses, Exchange hub transport queues.
-If something go wrong, the appropriate line change to red color.
+If something go wrong, the appropriate line change from blue to red color inside table in sended email.
  
 .Notes 
     NAME:  monitoring
@@ -16,7 +16,7 @@ If something go wrong, the appropriate line change to red color.
     KEYWORDS: AD replication, DAG replication, transport queues
 #>
 
-
+[CmdletBinding()]
 $a = "<style>"
 $a = $a + "BODY{background-color:#C6ECEE;}"
 $a = $a + "TABLE{border-width: 1px;border-style: solid;border-color: black;border-collapse: collapse;}"
