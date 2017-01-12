@@ -1,3 +1,45 @@
+
+function joindomain {
+
+<#
+.SYNOPSIS
+Set  ACL rights to perform domain join.
+.DESCRIPTION
+Set minimum ACL rights to perform domain join for specified user and computer account.
+.PARAMeter principal
+Define principal under which will be computer joined to domain.
+.PARAMeter computer
+Name of computer object which will be joined to domain.
+#>
+
+
+param ($principal=$(read-host 'please insert principal'),
+			$computer=$(read-host 'please insert name of AD computer'))
+			
+
+
+Add-AccessControlEntry -SDObject (Get-ADcomputer $computer).distinguishedname -ActiveDirectoryRights ExtendedRight -Principal $principal `
+-ObjectAceType "00299570-246D-11D0-A768-00AA006E0529" -AceType AccessAllowed -AppliesTo Object -OnlyApplyToThisContainer
+
+
+Add-AccessControlEntry -SDObject (Get-ADcomputer $computer).distinguishedname -ActiveDirectoryRights self -Principal $principal `
+-ObjectAceType "f3a64788-5306-11d1-a9c5-0000f80367c1" -AceType AccessAllowed -AppliesTo Object -OnlyApplyToThisContainer
+
+
+Add-AccessControlEntry -SDObject (Get-ADcomputer $computer).distinguishedname -ActiveDirectoryRights self -Principal $principal `
+-ObjectAceType "72e39547-7b18-11d1-adef-00c04fd8d5cd" -AceType AccessAllowed -AppliesTo Object -OnlyApplyToThisContainer
+
+
+Add-AccessControlEntry -SDObject (Get-ADcomputer $computer).distinguishedname -ActiveDirectoryRights writeproperty -Principal $principal `
+-ObjectAceType "4c164200-20c0-11d0-a768-00aa006e0529" -AceType AccessAllowed -AppliesTo Object -OnlyApplyToThisContainer
+
+
+Get-AccessControlEntry -Principal haviarm -inputobject (Get-ADcomputer $computer).distinguishedname  | ft -AutoSize
+}
+
+
+
+
 function getace { 
 <#   
 .Synopsis
@@ -84,45 +126,6 @@ switch ($object) {
 
 
 
-function joindomain {
-
-<#
-.SYNOPSIS
-Set  ACL rights to perform domain join.
-.DESCRIPTION
-Set minimum ACL rights to perform domain join for specified user and computer account.
-.PARAMeter principal
-Define principal under which will be computer joined to domain.
-.PARAMeter computer
-Name of computer object which will be joined to domain.
-#>
-
-
-param ($principal=$(read-host 'please insert principal'),
-			$computer=$(read-host 'please insert name of AD computer'))
-			
-
-
-Add-AccessControlEntry -SDObject (Get-ADcomputer $computer).distinguishedname -ActiveDirectoryRights ExtendedRight -Principal $principal `
--ObjectAceType "00299570-246D-11D0-A768-00AA006E0529" -AceType AccessAllowed -AppliesTo Object -OnlyApplyToThisContainer
-
-
-Add-AccessControlEntry -SDObject (Get-ADcomputer $computer).distinguishedname -ActiveDirectoryRights self -Principal $principal `
--ObjectAceType "f3a64788-5306-11d1-a9c5-0000f80367c1" -AceType AccessAllowed -AppliesTo Object -OnlyApplyToThisContainer
-
-
-Add-AccessControlEntry -SDObject (Get-ADcomputer $computer).distinguishedname -ActiveDirectoryRights self -Principal $principal `
--ObjectAceType "72e39547-7b18-11d1-adef-00c04fd8d5cd" -AceType AccessAllowed -AppliesTo Object -OnlyApplyToThisContainer
-
-
-Add-AccessControlEntry -SDObject (Get-ADcomputer $computer).distinguishedname -ActiveDirectoryRights writeproperty -Principal $principal `
--ObjectAceType "4c164200-20c0-11d0-a768-00aa006e0529" -AceType AccessAllowed -AppliesTo Object -OnlyApplyToThisContainer
-
-
-Get-AccessControlEntry -Principal haviarm -inputobject (Get-ADcomputer $computer).distinguishedname  | ft -AutoSize
-
-
-}
 
 
 
