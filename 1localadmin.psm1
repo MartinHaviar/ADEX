@@ -15,7 +15,7 @@ user account which have problems with authentification
     KEYWORDS: [ADSI], membership,local admin group
 #>
 
-
+[CmdletBinding()]
 param([string]$outputdir = "D:\usersdata\haviarm\Desktop\testL\localadm",
       [string]$OU = $(read-host 'please input DN of search OU in AD, for example: OU=TN,OU=RS,DC=mil,DC=sk'))
 
